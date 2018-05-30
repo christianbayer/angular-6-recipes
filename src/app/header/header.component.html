@@ -10,13 +10,19 @@
       </li>
     </ul>
     <ul class="navbar-nav right">
-      <li class="nav-item dropdown" appDropdown>
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <ng-template [ngIf]="!authService.isAuthenticated()">
+        <li class="nav-item"><a class="nav-link" routerLink="/signup">Register</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/signin">Login</a></li>
+      </ng-template>
+      <li class="nav-item"><a class="nav-link" (click)="onLogout()" style="cursor: pointer;" *ngIf="authService.isAuthenticated()">Logout</a></li>
+      <li class="nav-item dropdown" appDropdown *ngIf="authService.isAuthenticated()">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
           Manage
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown" appDropdown>
-          <a class="dropdown-item" href="#">Save Data</a>
-          <a class="dropdown-item" href="#">Fetch Data</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="onSaveData()">Save Data</a>
+          <a class="dropdown-item" (click)="onFetchData()">Fetch Data</a>
         </div>
       </li>
     </ul>
